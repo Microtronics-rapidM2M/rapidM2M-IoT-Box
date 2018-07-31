@@ -1,0 +1,116 @@
+﻿//===========
+//Wireless Thermometer
+//===========
+//===
+//=== Settings
+//===
+<table>
+    //Der Konfigurationsblock 0 soll verwendet werden
+    name  = config0                         
+    //Bezeichnung für den Konfig. Abschnitt, die am Server angezeigt wird
+    title = Configuration               
+    <field>
+        //Parameter 0 soll für das Übertragungsintervall verwendet werden
+        name       = field0             
+        //Alternativer Feldname, der von der REST-API verwendet werden kann
+        alias      = RecordInterval     
+        //Bezeichnung des Parameters, die am Server angezeigt wird
+        title      = Record Interval    
+        //Position im Konfigblock 0 an der der Parameter gespeichert ist
+        byteofs    = 0                  
+        //keine Kommastellen
+        decpl      = 0                  
+        //Datentyp: 32Bit unsigned
+        type       = u32 
+        //Einheit in der der Wert für den Parameter einzugeben ist               
+        units      = sec  
+        //kleinster gültiger Wert für den Parameter              
+        min        = 10                  
+        //Defaultwert ist 60sec.
+        default    = 60                      
+    </field>
+    <field>
+        //Parameter 1 soll für das Aufzeichnungsintervall verwendet werden
+        name       = field1            
+        alias      = TransmissionInterval
+        title      = Transmission Interval
+        byteofs    = 4                  
+        decpl      = 0
+        type       = u32
+        units      = min
+        min        = 10
+        default    = 60
+        //Umrechnungsfaktor sec.->min. (intern wird mit sec. gearbeitet)                 
+        vscale     = 0.01666666667      
+    </field>
+    <field>
+        //Parameter 2 soll für die Verbindungsart verwendet werden
+        name       = field2             
+        alias      = TransmissionMode
+        title      = Transmission Mode
+        byteofs    = 8                  
+        decpl      = 0
+        type       = u8
+        default    = 0
+        //Auswahlmöglichkeiten für die Dropdown-Liste
+        editmask   = 0=Intervall;1=Wakeup;2=Online 
+    </field>
+</table>
+
+//===
+//=== Measurement Channels
+//===
+<split>
+    //Rohdatenkanal (beim rapidM2M M3 immer "rm2mraw") aus dem die Datensätze kopiert werden sollen  
+    source = rm2mraw
+    //Messdatenkanal in den der Datensatz kopiert werden soll
+    target = histdata0
+    //Entspricht das erste Byte des Datensatzes diesem Wert, wird er in den angegeben Messdatenkanal 
+    //kopiert.
+    key    = 00
+</split>
+<table>
+    //Der Messdatenkanal 0 soll verwendet werden.
+    name = histdata0
+    <field>
+        //Datenfeld 0 soll für die Batteriespannung verwendet werden.
+        name    = ch0
+        //Alternativer Feldname, der von der REST-API verwendet werden kann
+        alias   = VoltageBattery
+        //Bezeichnung des Datenfelds, die am Server angezeigt wird
+        title   = Battery Voltage
+        //Position im Messdatenkanal 0, an der das Datenfeld gespeichert ist
+        //Hinweis: An Position "0" befindet sich der "key" für den Split-Tag 
+        byteofs = 1
+        //Der Messwert soll auf 2 Kommastellen gerundet werden.
+        decpl   = 2
+        //Datentyp: 16Bit signed
+        type    = s16
+        //Umrechnungsfaktor mV->V (intern wird mit V gearbeitet)
+        vscale  = 0.001
+        //Einheit des Messwertes, die am Server angezeigt wird
+        units   = V
+    </field>
+    <field>
+        //Datenfeld 1 soll für die USB-Ladespannung verwendet werden.
+        name    = ch1
+        alias   = VoltageUSB
+        title   = USB Voltage
+        byteofs = 3
+        decpl   = 2
+        type    = s16
+        vscale  = 0.001
+        units   = V
+    </field>
+    <field>
+        //Datenfeld 2 soll für die Temperatur verwendet werden.
+        name    = ch2
+        alias   = Temperature
+        title   = Temperature
+        byteofs = 5
+        decpl   = 1
+        type    = s16
+        vscale  = 0.1
+        units   = °C
+    </field>
+</table>

@@ -1,0 +1,415 @@
+﻿//===========
+//Basic_IO
+//===========
+
+
+
+//===
+//=== Input Channel Settings
+//===
+<table>
+    name  = config1                         
+    title = Input Channel Settings
+
+    //=== Configuration Parameter: Channel 1 Name 
+    <field>
+        name       = field0             
+        alias      = DI1_Name  
+        title      = Channel 1 Name   
+        byteofs    = 0                                   
+        type       = string 
+        default    = Input Channel 1
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 1 Mode 
+    <field>
+        name       = field1             
+        alias      = DI1_Mode    
+        title      = Channel 1 Mode   
+        byteofs    = 16                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+
+    //=== Configuration Parameter: Channel 2 Name 
+    <field>
+        name       = field2             
+        alias      = DI2_Name  
+        title      = Channel 2 Name   
+        byteofs    = 17                                   
+        type       = string 
+        default    = Input Channel 2
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 2 Mode 
+    <field>
+        name       = field3             
+        alias      = DI2_Mode    
+        title      = Channel 2 Mode   
+        byteofs    = 33                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>	
+
+    //=== Configuration Parameter: Channel 3 Name 
+    <field>
+        name       = field4             
+        alias      = DI3_Name  
+        title      = Channel 3 Name   
+        byteofs    = 34                                   
+        type       = string 
+        default    = Input Channel 3
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 3 Mode 
+    <field>
+        name       = field5             
+        alias      = DI3_Mode    
+        title      = Channel 3 Mode   
+        byteofs    = 50                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+	
+    //=== Configuration Parameter: Channel 4 Name 
+    <field>
+        name       = field6             
+        alias      = DI4_Name  
+        title      = Channel 4 Name   
+        byteofs    = 51                                   
+        type       = string 
+        default    = Input Channel 4
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 4 Mode 
+    <field>
+        name       = field7             
+        alias      = DI4_Mode    
+        title      = Channel 4 Mode   
+        byteofs    = 67                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+	
+    //=== Configuration Parameter: Channel 5 Name 
+    <field>
+        name       = field8             
+        alias      = DI5_Name  
+        title      = Channel 5 Name   
+        byteofs    = 68                                   
+        type       = string 
+        default    = Input Channel 5
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 5 Mode 
+    <field>
+        name       = field9             
+        alias      = DI5_Mode    
+        title      = Channel 5 Mode   
+        byteofs    = 84                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+
+    //=== Configuration Parameter: Channel 6 Name 
+    <field>
+        name       = field10             
+        alias      = DI6_Name  
+        title      = Channel 6 Name   
+        byteofs    = 85                                   
+        type       = string 
+        default    = Input Channel 6
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 6 Mode 
+    <field>
+        name       = field11             
+        alias      = DI6_Mode    
+        title      = Channel 6 Mode   
+        byteofs    = 101                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>	
+
+</table>
+
+//===
+//=== Output Channel Settings
+//===
+<table>
+    name  = config3                         
+    title = Output Channel Settings
+
+    //=== Configuration Parameter: Channel 1 Name 
+    <field>
+        name       = field0             
+        alias      = DO1_Name  
+        title      = Channel 1 Name   
+        byteofs    = 0                                   
+        type       = string 
+        default    = Output Channel 1
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 1 Mode 
+    <field>
+        name       = field1             
+        alias      = DO1_Mode    
+        title      = Channel 1 Mode   
+        byteofs    = 16                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+	
+    //=== Configuration Parameter: Channel 1 Setpoint
+    <field>
+        name       = field2            
+        alias      = DO1_Setpoint   
+        title      = Channel 1 Setpoint  
+        byteofs    = 17                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=low;1=high		              
+    </field>	
+	
+	
+	
+	
+
+    //=== Configuration Parameter: Channel 2 Name 
+    <field>
+        name       = field3             
+        alias      = DO2_Name  
+        title      = Channel 2 Name   
+        byteofs    = 18                                   
+        type       = string 
+        default    = Output Channel 2
+        max		   = 16              
+    </field>
+	
+    //=== Configuration Parameter: Channel 2 Mode 
+    <field>
+        name       = field4             
+        alias      = DO2_Mode    
+        title      = Channel 2 Mode   
+        byteofs    = 34                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=off;1=on		              
+    </field>
+	
+    //=== Configuration Parameter: Channel 2 Setpoint
+    <field>
+        name       = field5            
+        alias      = DO2_Setpoint   
+        title      = Channel 2 Setpoint  
+        byteofs    = 35                  
+        decpl      = 0                  
+        type       = u8 
+        default    = 0
+        editmask   = 0=low;1=high		              
+    </field>	
+	
+
+</table>
+
+//===
+//=== Basic Settings
+//===
+<table>
+    name  = config7                         
+    title = Basic settings               
+
+    //=== Configuration Parameter: Transmission Interval
+    <field>
+        name       = field1            
+        alias      = TransmissionInterval
+        title      = Transmission Interval
+        byteofs    = 0                  
+        decpl      = 0
+        type       = u32
+        units      = min
+        min        = 10
+        default    = 60            
+        vscale     = 0.01666666667      
+    </field>
+
+    //=== Configuration Parameter: Transmission Mode 
+    <field>
+        //Parameter 2 soll für die Verbindungsart verwendet werden
+        name       = field2             
+        alias      = TransmissionMode
+        title      = Transmission Mode
+        byteofs    = 4                  
+        decpl      = 0
+        type       = u8
+        default    = 0
+        //Auswahlmöglichkeiten für die Dropdown-Liste
+        editmask   = 0=Intervall;1=Wakeup;2=Online 
+    </field>
+</table>
+
+//===
+//=== Measurement Channels
+//===
+<split>
+    source = rm2mraw
+    target = histdata0
+    key    = 00
+</split>
+<table>
+    name = histdata0
+
+    //=== Measurement Channel: Digital Input Channel 1
+    <field>
+        name    = ch0
+        alias   = Digital_Input_Channel_1
+        title   = %config1%DI1_Name
+        byteofs = 1
+        decpl   = 0
+        type    = u8            
+    </field>
+
+	
+
+    //=== Measurement Channel: Digital Input Channel 2
+    <field>
+        name    = ch1
+        alias   = Digital_Input_Channel_2
+        title   = %config1%DI2_Name
+        byteofs = 2
+        decpl   = 0
+        type    = u8            
+    </field>
+	
+    //=== Measurement Channel: Digital Input Channel 3
+    <field>
+        name    = ch2
+        alias   = Digital_Input_Channel_3
+        title   = %config1%DI3_Name
+        byteofs = 3
+        decpl   = 0
+        type    = u8            
+    </field>	
+	
+    //=== Measurement Channel: Digital Input Channel 4
+    <field>
+        name    = ch3
+        alias   = Digital_Input_Channel_4
+        title   = %config1%DI4_Name
+        byteofs = 4
+        decpl   = 0
+        type    = u8            
+    </field>
+
+    //=== Measurement Channel: Digital Input Channel 5
+    <field>
+        name    = ch4
+        alias   = Digital_Input_Channel_5
+        title   = %config1%DI5_Name
+        byteofs = 5
+        decpl   = 0
+        type    = u8            
+    </field>
+
+    //=== Measurement Channel: Digital Input Channel 6
+    <field>
+        name    = ch5
+        alias   = Digital_Input_Channel_6
+        title   = %config1%DI6_Name
+        byteofs = 6
+        decpl   = 0
+        type    = u8            
+    </field>
+
+    //=== Measurement Channel: Output Channel 1
+    <field>
+        name    = ch6
+        alias   = Output_Channel_1
+        title   = %config3%DO1_Name
+        byteofs = 7
+        decpl   = 0
+        type    = u8            
+    </field>
+
+    //=== Measurement Channel: Output Channel 2
+    <field>
+        name    = ch7
+        alias   = Output_Channel_2
+        title   = %config3%DO2_Name
+        byteofs = 8
+        decpl   = 0
+        type    = u8            
+    </field>	
+
+    //=== Measurement Channel: Battery Voltage
+    <field>
+        name    = ch8
+        alias   = VoltageBattery
+        title   = Battery Voltage
+        byteofs = 9
+        decpl   = 2
+        type    = s16
+        vscale  = 0.001
+        units   = V
+    </field>
+
+    //=== Measurement Channel: USB Voltage	
+    <field>
+        name    = ch9
+        alias   = VoltageUSB
+        title   = USB Voltage
+        byteofs = 11
+        decpl   = 2
+        type    = s16
+        vscale  = 0.001
+        units   = V
+    </field>
+
+    //=== Measurement Channel: Temperature	
+    <field>
+        name    = ch10
+        alias   = Temperature
+        title   = Temperature
+        byteofs = 13
+        decpl   = 1
+        type    = s16
+        vscale  = 0.1
+        units   = °C
+    </field>
+
+    //=== Measurement Channel: GSM Level
+    <field>
+        name    = ch11
+        alias   = GSM_Level
+        title   = GSM Level
+        byteofs = 15
+        decpl   = 0
+        type    = s8
+        units   = dBm
+    </field>		
+	
+
+</table>

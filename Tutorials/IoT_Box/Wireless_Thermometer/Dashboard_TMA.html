@@ -1,0 +1,285 @@
+﻿
+<!DOCTYPE html>
+<!-- **********************************************************************************************
+ RAPIDM2M UAPI SAMPLE for User Agents
+ **************************************************************************************************
+ 20170518 AA
+	- initial version
+ 20170530 JP
+    - comments added
+*********************************************************************************************** -->
+<html lang="en">
+  <head>
+    <!-- Zeichencodierung auf UTF-8 setzen -->
+    <meta charset="utf-8">
+    <!-- Titel der Datei, der unter anderem in der Titelleiste des Browserfensters angezeigt wird -->	
+    <title>rapidM2M UAPI SAMPLE for User Agents</title>
+    <style>
+      /* Body: gesamte Bereite des Browsersfensters nutzen, Schriftart "Monospace", kein Außenabstand */
+      body   { width:100%;font-family:Monospace;margin:0}
+      /* Dashboard-Name: kein Außenabst., magenta Hintergrund, rechtsbündig, Innenabst. = 1x Schriftgr. */
+      h1     { margin:0;background: #E20074;color:white;text-align:right;padding:1em}
+      /* Master: aktiviert die Verwendung der Flex-Eigenschaften für die Unterelemente dieses Bereichs */  
+      .master{ display:flex }
+      /* Spacer: Der Bereich nimmt mit dem Faktor 1 den verfügbaren verbleibenden Raum eines Bereichs ein */ 
+      .spacer{ flex-grow:1 }
+      /* Login-Page bzw. Content-Page: bei Initialisierung ausgeblendet, Breite = 50x Schriftgröße  */
+      .page  { display: none; width:50em}
+      /*Alle DIV's innerhalb der Login-Page bzw. Content-Page: Außenabstand = 2x Schriftgr. */ 
+      .page>div{ margin:2em }
+      /*  Statusanzeige: weiße Schrift auf schwarzem Hintergrund, zentriert, Innenabst. = 1xSchriftgr. */ 
+      #uapi_msg{ background:#444;color:white;text-align:center;padding:1em}
+      /*  Messwertanzeige: Schriftgröße = 2x Content-Page Standard-Schriftgröße, normaler Schriftstil */ 
+      em { font-size:2em;font-style:normal; }
+    </style>
+  </head>
+
+  <body>
+    <div id="uapi_msg">.</div>           <!-- Statusanzeige -->
+  
+    <h1>rapidM2M UAPI SAMPLE</h1>        <!-- Name des Dashboards -->
+    <div class="master">                 <!-- für mittige Ausrichtung bei Größenänderung des Fensters -->
+      <div class="spacer"></div>         <!-- Spacer links von der Login-Page bzw. Content-Page -->
+      <div id="pg_login" class="page">   <!-- Login-Page -->
+        <h2>LOGIN</h2>                   <!-- Titel der Login-Page -->
+        <div>                            <!-- Anzeige der Web-Adresse des Servers -->
+          To be used with an IOT-Box account on 
+          <a href="https://iot-box.m2mdata.t-mobile.at">iot-box.m2mdata.t-mobile.at</a>
+        </div>
+        <div>
+          <!-- Eingabefeld für den Benutzernamen, Hinweistext auf "username" setzen , bekommt Focus -->                            
+          <input id="login_usr" type="text" placeholder="username" autofocus></input>
+          <!-- Eingabefeld für das Passwort, Hinweistext auf "password" setzen -->
+          <input id="login_pwd" type="password" placeholder="password"></input>
+          <!-- Login-Button zum Prüfen der User Credentials und Wechsel zur Content-Page -->
+          <button id="btn_login">LOGIN</button>
+        </div>	
+      </div>
+  
+      <div id="pg_content" class="page"> <!-- Content-Page -->
+        <h2>CONTENT</h2>                 <!-- Titel der Content-Page -->
+        <div id="me">loading...</div>    <!-- Anzeige von Kunden-, Benutzer- u. Messstellenname -->
+        <div>                            <!-- Anzeige der letzten Messwerte (inkl. Zeitstempel) -->
+           Current status: <span id="status">loading...</span>
+        </div>
+        <div>                            
+          <!-- Eingabefeld für das Aufzeichnungsintv., Hinweistext "new value + ENTER", bekommt Focus --> 
+          Set new recording interval and press ENTER to send:
+          <input id="ed_reciv" type="text" placeholder="new value + ENTER" autofocus></input>
+        </div>
+        
+        <!-- Button zum Abmelden des aktiven Benutzers und Wechsel zur Login-Page -->
+        <button id="btn_logout">LOGOUT</button>
+      </div>
+      <div class="spacer"></div>         <!-- Spacer rechts von der Login-Page bzw. Content-Page -->
+    </div>
+    <!-- Einbinden der jQuery-Library  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Einbinden der rapidM2M UAPI Library -->
+    <script src="https://cdn.microtronics.at/libs/fe/rapidm2m-uapi.js"></script>
+    <script>
+      "use strict";                      // Der JavaScript-Code soll im "strict mode" ausgeführt werden. 
+      
+      showpage( '#pg_login');            // Login-Page einblenden
+      			
+      // Konstante, die die Web-Adresse des Servers enthält
+      const MY_HOST = 'https://iot-box.m2mdata.t-mobile.at/api';
+      
+      /*========================================================================================
+      Funktion zum Aus-/Einblenden der Login-Page und Content-Page
+      
+      pg:[in]
+        id der Page, die eingeblendet werden soll
+      ========================================================================================*/
+      function showpage(pg){	
+        $('.page').hide();               // Alle Pages ausblenden
+        $(pg).show();                    // Page, deren Id übergeben wurde, einblenden
+        // Sucht in der Page ein Objekt mit gesetztem "autofocus"-Attribut u. setzt den Focus auf dieses Obj.
+        $(pg).find('[autofocus]').focus();  
+      }
+      
+      let uapi;         // Variable für eine neue Instanz der JavaScript-Klasse "UAPI"
+      let poll_tmr;     // Variable zur Aufnahme der von der Funktion "setTimeout" zurückgelieferten ID
+      let poll_spin=0;  // Variable zum Toggeln des Symbols zur Anzeige der Aktivität in der Content-Page
+      
+      // Konstante für das js-Objekt das auf das DOM Element des Eingabefelds "Aufzeichnungsitv." verweist
+      const $ed_reciv= $('#ed_reciv'); 
+      
+      /*========================================================================================
+      Zeigt im Bereich der Statusanzeige den übergebenen String an. Wenn ein Leerstring oder 
+      kein String übergeben wird, wird in der Statusanzeige das Zeichen "." angezeigt. 
+      
+      msg:[in]
+        String der im Bereich der Statusanzeige angezeigt werden soll
+      ========================================================================================*/
+      function msg(msg){
+        $('#uapi_msg').html( msg || '.');
+      }
+	  
+      /*========================================================================================
+      Aktualisiert den Bereich in dem die letzten Messwerte angezeigt werden
+      Nach dem Absetzen der API-Abfrage setzt diese Funktion einen Timeout von 1sec. nach dessen
+      Ablauf sie wieder aufgerufen wird. Der erste Aufruf dieser Funktion erfolgt nach 
+      erfolgreicher Überprüfung der User Credentials beim Klicken des Login-Buttons
+      ========================================================================================*/
+      function poll_status(){
+      
+        //Konstante für die Liste der Messwerte (alias), deren akt. Werte vom Server gelesen werden sollen      
+        const o = {
+                    select:["VoltageBattery","VoltageUSB","Temperature"] 
+                  };
+        /* Get Zugriff auf den aktuellsten der gespeicherten Messdatensätze des Messdatenkanals 0, wobei die 
+           in der Konstante "o" angegebenen Messwerte gelesen werden. Die anonyme Funktion verarbeitet den 
+           Response-Code (err) und das zurückgelieferte JSON-Array(x)                                         */
+        uapi.get( '1/customers/$cid/sites/$sid/histdata0/youngest', o, (err,x)=>{
+      
+          /* Variable zur Aufnahme des Strings der im Bereich für Anzeige der letzten Messwerte angezeigt wird.
+            Das 1ste Zeichen wird bei jedem Aufruf abwechselnd auf "*" o. "." gesetzt, um Aktivität anzuzeigen*/
+          let s = (++poll_spin & 1) ? '* ':'. ';
+         
+          if (err)                       // Wenn ein Fehler aufgetreten ist -> 
+            s += err                     // Fehlercode zum String "s" hinzufügen  
+          else if (!x.length)            // Andernfalls -> Wenn JSON-Array die Länge 0 hat -> 
+            s += '(no data yet available)';//Hinweis, dass keine Daten vorhanden sind, zum String "s" hinzufügen
+          else {
+            /* Den Zeitstempel aus dem JSON-Arrayelement [0][0] in das Format "yyyy-mm-dd hh:nn:ss[.zzz]" 
+               umwandeln, den "[.zzz]"-Anteil entfernen und das Ergebnis zum String "s" hinzufügen            */
+            s += uapi.stampFormat( x[0][0]).substr(0,19);
+            // Die Messwerte aus dem JSON-Array inkl. entsprechender Beschriftung zum String "s" hinzufügen  
+            s += ` Ubat=<em>${x[0][1]}</em>V Uusb=<em>${x[0][2]}</em>V T=<em>${x[0][3]}</em> &deg;C`;
+          }
+      
+          $('#status').html( s);         // Im Bereich für die letzten Messwerte den String "s" anzeigen
+      
+          /* Timout von 1000ms setzen und zurückgelieferte ID in Variable speichern. Nach Ablauf des Timeouts 
+             wird die Funktion "poll_status" erneut aufgerufen.                                               */ 
+          poll_tmr= setTimeout( poll_status, 1000);
+        });
+      
+      }
+
+      /*========================================================================================
+      Beim Klicken auf den Login-Button werden zunächst die User Credentials geprüft und die 
+      erste Messstelle innerhalb des ersten Kunden für den der Benutzer die Zugriffsberechtigung 
+      besitzt ausgewählt. Anschließend wird das aktuelle Aufzeichnungsintervall vom Server 
+      gelesen, zur Content-Page gewechselt und die Funktion zum Aktualisieren des Bereichs mit  
+      den letzten Messwerten das erste Mal aufgerufen. Dieser Funktion ruft sich danach durch 
+      Setzen des Timeouts im Sekundenintervall selbst immer wieder auf. 
+      ========================================================================================*/
+      $('#btn_login').click(()=>{
+      
+        msg('connecting...');            // Im Bereich der Statusanzeige den Text "connecting..." anzeigen
+      
+        uapi=new UAPI(                   // Eine neue Instanz der JavaScript-Klasse "UAPI" anlegen und
+          $('#login_usr').val(),         // den Benutzernamen aus dem Eingabefeld in die Klasse übernehmen
+          $('#login_pwd').val(),         // das Passwort aus dem Eingabefeld in die Klasse übernehmen
+          MY_HOST);                      // Web-Adresse des Servers von der Konstante in die Klasse übernehmen
+      
+        // Globale Fehlersignalisierung festlegen
+        uapi.onError= (err,info)=>{      // Callback in die Instanz der JavaScript-Klasse "UAPI" übernehmen 
+          switch(err) {                  // Switch des Response-Code (err) -> 
+            // ungültige User Credentials -> In der Statusanzeige den Text "Illegal user credentals!" anzeigen
+            case 401: msg('Illegal user credentals!'); break; 
+            // bei allen anderen Fehlern -> Response-Code und zusätzliche Infos in der Statusanzeige anzeigen
+            default : msg('ERR#'+err +' ... ' + info);
+          }
+        }
+      
+        /* Liste der Kunden ermitteln, auf die der akt. Benutzer Zugriffsrechte besitzt. Die anonyme Funktion
+           verarbeitet den Response-Code (err) und das zurückgelieferte JSON-Objekt(me) mit der Kundenliste   */
+        uapi.get('1/me',(err,me)=>{									
+      
+          if (err) return;               // bei Fehler auf der Login-Page bleiben 
+                                         // (Restliche Behandlung übernimmt die globale Fehlersignalisierung.)
+      
+          /* Ersten Kunden aus der Liste wählen. In den folgenden Ressourcen-Pfaden wird "$cid" durch den in 
+             die Instanz "uapi" übernommenen Kundennamen ersetzt.                                             */
+          uapi.placeholders.$cid= me.customers[0];
+      
+          /* Liste der Messstellen, die dem gewählten Kunden zugewiesen sind, ermitteln. Die anonyme Funktion
+           verarbeitet den Response-Code (err) und das JSON-Objekt(sites) mit der Messstellenliste            */
+          uapi.get('1/customers/$cid/sites',(err,sites)=>{
+      
+            if (err) return;             // bei Fehler auf der Login-Page bleiben 
+                                         // (Restliche Behandlung übernimmt die globale Fehlersignalisierung.)
+      
+            /* Erste Messstelle aus der Liste wählen. In den folgenden Ressourcen-Pfaden wird "$sid" durch die 
+             in die Instanz "uapi" übernommene unique ID der Messstelle ersetzt.                              */
+            uapi.placeholders.$sid= sites[0]._uid;
+            
+            /* Konfig 0 der gewählten Messstelle auslesen. Die anonyme Funktion verarbeitet den Response-Code 
+               (err) und das JSON-Objekt(x) mit den Konfigurationsparametern.                                 */
+            uapi.get( '1/customers/$cid/sites/$sid/config0',(err,x)=>{	
+      
+              if (err) return;           // bei Fehler auf der Login-Page bleiben 
+                                         // (Restliche Behandlung übernimmt die globale Fehlersignalisierung.)
+      
+              // Vom Server gelesenes Aufzeichnungsitv. in das Eingabefeld für das Aufzeichnungsitv schreiben
+              $ed_reciv.val( x.recordinterval);
+      
+              msg();                    //Bereich der Statusanzeige löschen
+      
+              showpage('#pg_content');  //Content-Page einblenden und gleichzeitig Login-Page ausblenden 
+              
+              //Aktuell gewählten Kunden-, Benutzer- u. Messstellennamen im entsprechenden Bereich anzeigen
+              $('#me').text(
+                me.user.name + ' > ' +
+                me.customers[0] + ' > ' + 
+                sites[0].name);
+                
+              //Funktion zum Aktualisieren des Bereichs mit den letzten Messwerten das erste Mal aufrufen
+              poll_status();           
+            });
+          });
+        });
+      });	  
+
+      /*========================================================================================
+      Steht der Cursor im Eingabefeld für das Aufzeichnungsintervall und wird die ENTER-Taste
+      gedrückt, wird der in das Eingabefeld eingegebene Wert in die Konfig 0 übernommen und 
+      zum Server übermittelt. Dabei wird auch sichergestellt, das das Mindestintervall 
+      eingehalten wird. 
+      ========================================================================================*/
+      //Wenn eine Taste losgelassen wurde, verarbeitet die anonyme Funktion das Eventobjekt
+      $ed_reciv.on('keyup', (ev)=>{     
+      			
+        if (ev.keyCode !== 13) return;  // Wenn es sich nicht um die ENTER-Taste handelt -> return	
+      
+        msg('Saving...');               // Im Bereich der Statusanzeige den Text "Saving..." anzeigen
+        
+        //Konstante die sowohl den Parameter (alias) als auch den zu setzenden Wert angibt
+        const o= {
+                   //bei ungültigen Eingaben bzw. Werten < 10sec. das Aufzeichnungsitv. auf 10sec. setzen  
+                   recordinterval: Math.max( $ed_reciv.val() || 10, 10)
+                 }
+      
+        /* Mittels PUT die Konfig 0 der beim Login gewählten Messstelle aktualisieren, wobei die Konstante "o"
+           sowohl den Parameter als auch den zu setzenden Wert angibt. Die anonyme Funktion verarbeitet den 
+           Response-Code (err)                                                                                */
+        uapi.put( '1/customers/$cid/sites/$sid/config0', o, (err)=>{
+      
+          if (err) return;               // bei Fehler -> return 
+                                         // (Restliche Behandlung übernimmt die globale Fehlersignalisierung.)
+      
+          msg();                        //Bereich der Statusanzeige löschen
+        });
+      });
+
+      /*========================================================================================
+      Beim Klicken des Logout-Buttons wird die sekündliche Aktualisierung des Bereichs mit  
+      den letzten Messwerten gestoppt, die Instanz der JavaScript-Klasse "UAPI" welche die 
+      aktuellen User Credentials enthält, gelöscht und die Login-Page eingeblendet. 
+      ========================================================================================*/
+      $('#btn_logout').click(()=>{
+        
+        /* Durch Löschen des Timeouts wird die Schleife in der sich die Funktion zum Aktualisieren des Bereichs
+           mit den letzten Messwerten permanent selbst wieder aufruft, unterbrochen.                          */
+        clearTimeout( poll_tmr);
+      
+        uapi= null;                     // Instanz der Klasse "UAPI" mit den User Credentials löschen  
+        showpage('#pg_login');          // Login-Page einblenden und gleichzeitig Content-Page ausblenden 
+      });
+	  
+    </script>
+  </body>
+</html>

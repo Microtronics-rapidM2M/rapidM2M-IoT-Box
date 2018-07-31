@@ -1,0 +1,44 @@
+The script records periodic measurement data and transfers it to the Cloud server. The interval for recording and
+transmitting measurement data can be configured. The connection type can also be configured. If the "online" connection
+type is selected, the measurement data is transmitted to the server as soon as the measurement data is created. The
+battery voltage, USB charging voltage and temperature are recorded. The current operating state is indicated by the RGB-LED.
+The LED lights up blue if there is an existing connection with the Cloud server. The LED flickers blue while the
+connection is being established. If the last connection attempt failed, the LED flashes red until the next attempt to establish
+a connection. However, if the last connection establishment was successful and the rapidM2M M3 is waiting for the next
+contact with the Cloud server (e.g. during "Interval" connection mode), then the LED is switched off. A connection to the
+server is either triggered automatically by the device following expiry of the transmission interval or receipt of a wakeup
+SMS or manually by pressing the button.
+
+Note: The units specified in the following relate to the exchange of data between the rapidM2M M3 and Cloud
+server. When defining the connector, the "vscale" attribute can be used to adapt the units for the display on the
+interface of the Cloud server or output via the REST-API. The transmission interval for the display/input is thus
+converted from seconds to minutes, for example.
+
+
+
+The script generates and transmits the following measurement values:
+
+Measurement value:      Unit:       Explanation:
+Battery voltage         mV          Voltage at the rechargeable battery connection of the rapidM2M M3	
+					
+                                    If the rapidM2M M3 is charged via USB, the measurement value corresponds to the
+                                    charging voltage. Otherwise, the measurement value corresponds to the voltage of
+                                    the connected rechargeable battery.
+
+USB charging voltage    mV          Voltage at the USB connection of the rapidM2M M3
+Temperature             0.1°C       Measurement value read out from the TMP112 (IC5) temperature sensor of therapidM2M M3
+
+
+
+
+The script provides the following configuration options:
+
+Parameter:              Unit:       Explanation:
+Transmission interval   sec.        Time between transmissions
+Record interval         sec.        Time between measurement data recordings
+Connection type         ---         0: The device connects in the transmission cycle.
+                                    1: The device connects in the transmission cycle.However, a connection can also be initiated through the server.
+                                    2: The device does not disconnect the connection and continuously transmits the measurement data.
+
+
+Further Information: https://blog.microtronics.at/from-sensor-to-the-cloud-what/

@@ -1,0 +1,102 @@
+﻿//===========
+//
+//===========
+
+
+//===
+//=== Basic Settings
+//===
+<table>
+    name  = config7                         
+    title = Basic settings               
+
+    //=== Configuration Parameter: Transmission Interval
+    <field>
+
+	//Parameter 0 should be used for the transmission interval
+        name       = field0 
+        //Alternative field name that can be used by the REST-API           
+        alias      = TransmissionInterval
+        //Title of the parameter displayed on the server
+        title      = Transmission Interval
+        //Position in config block 7 where the parameter is saved
+        byteofs    = 0
+        //No decimal places                  
+        decpl      = 0
+        //Data type: 32Bit unsigned
+        type       = u32
+        //Unit to be used to enter the value for the parameter
+        units      = min
+        //Lowest valid value for the parameter 
+        min        = 10
+        //Default value is 60 min.
+        default    = 60            
+        //Conversion factor sec.->min. (sec. used internally)   
+        vscale     = 0.01666666667      
+    </field>
+
+    //=== Configuration Parameter: Transmission Mode 
+    <field>
+        name       = field1             
+        alias      = TransmissionMode
+        title      = Transmission Mode
+        byteofs    = 4                  
+        decpl      = 0
+        type       = u8
+        default    = 0
+        //Selection options for the dropdown list
+        editmask   = 0=Intervall;1=Wakeup;2=Online 
+    </field>
+</table>
+
+//===
+//=== Measurement Channels
+//===
+<split>
+    source = rm2mraw
+    target = histdata0
+    key    = 00
+</split>
+<table>
+    //Measurement data channel 0 should be used.
+    name = histdata0
+
+    //=== Measurement Channel: Player 1
+    <field>
+        //Data field 0 should be used for the counter reading of the Player 1 counter.
+        name    = ch0
+        //Alternative field name that can be used by the REST-API
+        alias   = Player1_counter
+        //Title of the data field displayed on the server
+        title   = Player 1
+        //Position in measurement data channel 0 where the data field is saved
+        //Note: The key for the split tag is located at position "0"
+        byteofs = 1
+        //The measurement value should be rounded off to two decimal places.
+        decpl   = 0
+        //Data type: 32Bit unsigned
+        type    = u32
+    </field>
+
+    //=== Measurement Channel: Player 2
+    <field>
+        //Data field 1 should be used for the counter reading of the output counter.
+        name    = ch1
+        alias   = Player2_counter
+        title   = Player 2
+        byteofs = 5
+        decpl   = 0
+        type    = u32
+    </field>
+
+    //=== Measurement Channel: Difference 
+    <field>
+        //Data field 2 should be used for the difference (Player 2 - Player 1).
+        name    = ch2
+        alias   = Difference
+        title   = Difference
+        byteofs = 9
+        decpl   = 0
+        type    = s32
+    </field>
+</table>

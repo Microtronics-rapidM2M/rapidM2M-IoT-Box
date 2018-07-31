@@ -1,0 +1,56 @@
+Das Script überwacht im 250ms Intervall die 6
+Digitaleingänge, zeichnet bei Änderung eines der Pegel an
+den Eingängen die Messdaten auf und überträgt diese an
+den Cloud-Server.
+Neben den Digitaleingängen stehen zwei Digitalausgänge,
+deren Stellwerte konfigurierbar sind, zur Verfügung. Auch
+eine Modifikation dieser Stellwerte führt zur Aufzeichnung
+und Übertragung der Messdaten. Aufgezeichnet werden
+neben den Pegeln an den 6 Digitaleingängen auch die
+aktuellen Stellwerte der beiden Digitalausgänge sowie die
+Batteriespannung, die USB-Ladespannung, die Temperatur
+und die GSM Signalstärke.
+Sowohl die Digitaleingänge als auch die Digitalausgänge
+lassen sich per Konfiguration einzeln deaktivieren.
+Messwerte deaktivierter Ein-/Ausgänge werden im
+Messdatensatz auf „NaN“ gesetzt. Es ist auch möglich, die
+Verbindungsart zu konfigurieren. Wird die Verbindungsart
+"online" gewählt, werden die Messdaten unverzüglich sobald
+sie erstellt wurden zum Server übertragen. Beim Einsatz
+einer der beiden anderen Verbindungsarten („Intervall“ oder
+„Wakeup“) wird nach dem Erstellen des Messdatensatzes
+ein Verbindungsaufbau ausgelöst, um die Daten in weiterer
+Folge an den Server übermitteln zu können.
+Zusätzlich zum ereignisgetriggerten Verbindungsaufbau
+(Pegelwechsel am Digitaleingang oder neuer Stellwert für
+den Digitalausgang) lässt sich ein Intervall für die
+Übertragung der Messdaten konfigurieren. Unmittelbar vor
+Ablauf dieses Intervalls erfolgt auch eine Aufzeichnung der
+Messdaten, unabhängig davon, ob sich einer der Pegel an
+den Eingängen geändert hat.
+Der aktuelle Betriebszustand wird mittels RGB-LED
+signalisiert. Bei bestehender Verbindung mit dem
+Cloud-Server leuchtet die LED blau. Während des
+Verbindungsaufbaus flackert die LED blau. Schlug der letzte
+Verbindungsaufbau fehl, blinkt die LED bis zum nächsten
+Verbindungsaufbauversuch rot. War der letzte
+Verbindungsaufbau hingegen erfolgreich und wartet das
+Modul auf die nächste Kontaktaufnahme mit dem Server
+(z.B. im Verbindungsmodus "Intervall"), ist die LED
+ausgeschaltet.
+Eine Verbindung zum Server wird entweder automatisch
+durch das Gerät nach Ablauf des Übertragungsintervalls,
+Empfang einer Wakeup-SMS, Pegelwechsel am
+Digitaleingang, Setzen des Stellwerts für den Digitalausgang
+oder manuell durch Drücken der Taste ausgelöst. Beim
+Drücken der Taste erfolgt auch eine Aufzeichnung der
+Messdaten.
+
+
+Hinweis:
+Die Digitaleingänge 5 und 6 wurden mittels der
+Universaleingänge realisiert. Mit jedem Universaleingang
+der initialisiert wird, steigt der Energieverbrauch. Für
+Applikationen, bei denen der Energieverbrauch eine Rolle
+spielt, sollten diese beiden Eingänge nach Möglichkeit nicht
+verwendet bzw. deaktiviert werden.

@@ -1,0 +1,14 @@
+The dashboard has two views that are referred to as the "login page" and "content page" in the following. The login page,
+that enables the entry of the user credentials, is initially displayed after opening the dashboard. If valid login data is
+entered, this switches to the content page. In addition to issuing the latest measurement values for the battery voltage,
+USB charging voltage and temperature provided by the application script, the record interval can also be entered via the
+content page. The site, for which the information is displayed, is selected automatically. The first site of the first customer,
+for whom the user has access rights, is selected. The selection is displayed on the content page above the area for the
+measurement values. The measurement values themselves are updated at one second intervals. The logout button can be
+used to switch back to the login Page, which also deactivates the measurement values from being updated. When
+switching back to the login page, the user credentials entered in the input fields are not deleted. This has proven
+particularly convenient for the test phase during which you frequently switch between the two views. Although this feature
+should not be implemented in productive dashboards in this form under any circumstances. The dashboard also has an area
+to display status information (e.g. error codes) that is available in both views.
+
+Further Information: https://blog.microtronics.at/from-sensor-to-the-cloud-what/
