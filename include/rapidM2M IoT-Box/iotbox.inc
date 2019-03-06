@@ -19,6 +19,22 @@ const
 
 /**
  * <summary>
+ *   Available GPIOs.
+ * </summary>
+ */
+const
+{              
+  GPIO_1 = 0,
+  GPIO_2,
+  GPIO_3,
+  GPIO_4,
+  GPIO_5,
+  GPIO_6,  
+  GPIO_NUM,
+};
+
+/**
+ * <summary>
  *   Sys info structure.
  * </summary>
  * <param name="VBat">
