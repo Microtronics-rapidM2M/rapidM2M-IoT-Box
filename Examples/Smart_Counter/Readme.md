@@ -35,10 +35,9 @@ The script provides the following configuration options:
 |Record interval        |  sec.   | Time between measurement data recordings|
 |Transmission interval  |  sec.   | Time between transmissions				|
 |Connection type       	|  ---    |<li> 0: The device connects in the transmission cycle.</li> <li> 1: The device connects in the transmission cycle.However, a connection can also be initiated through the server. </li> <li> 2: The device does not disconnect the connection and continuously transmits the measurement data.</li> |
-
-**Pulse value of the input counter:** Factor with which the newly detected pulses are multiplied before they are added up
-
-**Pulse value of the output counter:** Factor with which the newly detected pulses are multiplied before they are added up
+|                       |         |                                         |  
+|Pulse value of the input counter |  ---    | Factor with which the newly detected pulses are multiplied before they are added up |
+|Pulse value of the output counter |  ---    | Factor with which the newly detected pulses are multiplied before they are added up|
 
 
 Further Information: https://blog.microtronics.at/smart-counting-no-problem
