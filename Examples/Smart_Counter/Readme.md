@@ -1,4 +1,3 @@
-
 # Example - Smart Stadium
 ![Smart Stadium Image](https://blog.microtronics.at/wp-content/uploads/2018/01/smart-stadium-come-go.jpg)
 
@@ -21,23 +20,25 @@ A connection to the server is either triggered automatically by the device follo
 
 The script generates and transmits the following measurement values:
 
-| Measurement value:   |   Unit:  |       Explanation:  |
-|---------------------|--------|-----------------------|
-|Input counter  |         ---  | Sum of the added weighted impulses at the UI1. Calculation: current counter reading + (newly detected pulses * impulse value) |
-|Output counter |         ---  | Sum of the added weighted impulses at the UI2. Calculation: current counter reading + (newly detected pulses * impulse value) |
-|Difference     |        ---   | Difference between input and output counter (input counter - output counter)|
+| Measurement value: | Unit: | Explanation:                                                                                                                  |
+|--------------------|-------|-------------------------------------------------------------------------------------------------------------------------------|
+| Input counter      | ---   | Sum of the added weighted impulses at the UI1. Calculation: current counter reading + (newly detected pulses * impulse value) |
+| Output counter     | ---   | Sum of the added weighted impulses at the UI2. Calculation: current counter reading + (newly detected pulses * impulse value) |
+| Difference         | ---   | Difference between input and output counter (input counter - output counter)                                                  |
+
 
 
 The script provides the following configuration options:
 
-|Parameter:				| Unit:   |   Explanation:							|
-|-----------------------|---------|-----------------------------------------|
-|Record interval        |  sec.   | Time between measurement data recordings|
-|Transmission interval  |  sec.   | Time between transmissions				|
-|Connection type       	|  ---    |<li> 0: The device connects in the transmission cycle.</li> <li> 1: The device connects in the transmission cycle.However, a connection can also be initiated through the server. </li> <li> 2: The device does not disconnect the connection and continuously transmits the measurement data.</li> |
-|                       |         |                                         |  
-|Pulse value of the input counter |  ---    | Factor with which the newly detected pulses are multiplied before they are added up |
-|Pulse value of the output counter |  ---    | Factor with which the newly detected pulses are multiplied before they are added up|
+| Parameter:                        | Unit: | Explanation:                                                                                                                                                                                                                                                                    |
+|-----------------------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Record interval                   | sec.  | Time between measurement data recordings                                                                                                                                                                                                                                        |
+| Transmission interval             | sec.  | Time between transmissions                                                                                                                                                                                                                                                      |
+| Connection type                   | ---   | 0: The device connects in the transmission cycle.</br> 1: The device connects in the transmission cycle.However, a connection can also be initiated through the server. </br> 2: The device does not disconnect the connection and continuously transmits the measurement data. |
+|                                   |       |                                                                                                                                                                                                                                                                                 |
+| Pulse value of the input counter  | ---   | Factor with which the newly detected pulses are multiplied before they are added up                                                                                                                                                                                             |
+| Pulse value of the output counter | ---   | Factor with which the newly detected pulses are multiplied before they are added up                                                                                                                                                                                             |
+
 
 
 Further Information: https://blog.microtronics.at/smart-counting-no-problem
