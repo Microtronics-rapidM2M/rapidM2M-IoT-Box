@@ -2,12 +2,12 @@
 
 ![!Wireless Thermometer Image](https://blog.microtronics.com/wp-content/uploads/2017/06/tutorial-wireless-thermometer.jpg)
 
-The script records periodic measurement data and transfers it to the Cloud server. The interval for recording and transmitting measurement data can be configured. The connection type can also be configured. If the "online" connection
+The script records periodic measurement data and transfers it to the [Cloud server](https://cloud.microtronics.com). The interval for recording and transmitting measurement data can be configured. The connection type can also be configured. If the "online" connection
 type is selected, the measurement data is transmitted to the server as soon as the measurement data is created. The battery voltage, USB charging voltage and temperature are recorded. 
 
 The current operating state is indicated by the RGB-LED.
 The LED lights up blue if there is an existing connection with the Cloud server. The LED flickers blue while the connection is being established. If the last connection attempt failed, the LED flashes red until the next attempt to establish
-a connection. However, if the last connection establishment was successful and the rapidM2M M3 is waiting for the next contact with the Cloud server (e.g. during "Interval" connection mode), then the LED is switched off. A connection to the
+a connection. However, if the last connection establishment was successful and the [rapidM2M M3](https://www.microtronics.com/en/products/rapidM2M_M3.html) is waiting for the next contact with the Cloud server (e.g. during "Interval" connection mode), then the LED is switched off. A connection to the
 server is either triggered automatically by the device following expiry of the transmission interval or receipt of a wakeup SMS or manually by pressing the button.
 
 > **Note:** The units specified in the following relate to the exchange of data between the rapidM2M M3 and Cloud
@@ -23,7 +23,7 @@ The script generates and transmits the following measurement values:
 |----------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Battery voltage      | mV    | Voltage at the rechargeable battery connection of the rapidM2M M3 </br> If the rapidM2M M3 is charged via USB, the measurement value corresponds to the charging voltage. Otherwise, the measurement value corresponds to the voltage of the connected rechargeable battery. |
 | USB charging voltage | mV    | Voltage at the USB connection of the rapidM2M M3                                                                                                                                                                                                                             |
-| Temperature          | 0.1°C | Measurement value read out from the TMP112 (IC5) temperature sensor of therapidM2M M3                                                                                                                                                                                        |
+| Temperature          | 0.1°C | Measurement value read out from the TMP112 (IC5) temperature sensor of the rapidM2M M3                                                                                                                                                                                        |
 
 
 

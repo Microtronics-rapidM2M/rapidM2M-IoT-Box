@@ -10,7 +10,7 @@ The measurement data generated in this way are recorded periodically and transmi
 If the "online" connection type is selected, the measurement data is transmitted to the server as soon as the measurement data is created. The input counter "IN" (UI1), the output counter "OUT" (UI2) and the difference "Energy used" (UI1-UI2) are recorded. 
 
 The current operating state is indicated by the RGB-LED. The LED lights up magenta if there is an existing connection with the Cloud server. The LED flickers 
-magenta while the connection is being established. If the last connection attempt failed, the LED flashes red until the next attempt to establish a connection. However, if the last connection establishment was successful and the [rapidM2M M3](https://www.microtronics.com/en/produkte/rapidM2M_M3.html) is waiting for the next contact with the Cloud server (e.g. during "Interval" connection mode), then the LED is switched off. 
+magenta while the connection is being established. If the last connection attempt failed, the LED flashes red until the next attempt to establish a connection. However, if the last connection establishment was successful and the [rapidM2M M3](https://www.microtronics.com/en/products/rapidM2M_M3.html) is waiting for the next contact with the Cloud server (e.g. during "Interval" connection mode), then the LED is switched off. 
 
 A connection to the server is either triggered automatically by the device following expiry of the transmission interval or receipt of a wakeup SMS or manually by pressing the button briefly (< 3sec.). By pressing the button for a long time (>3sec.) all 3 counter readings  (UI1, UI2 and difference) are reset.
 
