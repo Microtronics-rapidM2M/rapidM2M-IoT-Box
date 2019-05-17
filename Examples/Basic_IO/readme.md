@@ -1,4 +1,4 @@
-# Examples - Basic IO
+# Example - Basic IO
 
 The script monitors the six digital inputs at intervals of 250 ms, records the measurement data if one of the levels at the inputs 
 changes and transfers these to the [Cloud server](https://cloud.microtronics.com). In addition to the digital inputs, there are two digital outputs for which the 
@@ -53,7 +53,7 @@ Each the 6 individual input can be configured as follows:
 | Parameter:            | Unit: | Explanation:                                                                                                                                                                                                                                                                      |
 |-----------------------|-------|----------------------------------|
 | Name of digital input | ---   | Name of respective digital input |
-| Digital input			| ---	| (De-)Activation of digital inputs </br> 0:Input is activated </br> 1:Input is deactivated|
+| Digital input			| ---	| (De-)Activation of digital inputs </br> 0: Input is activated </br> 1: Input is deactivated|
 
 Output Channel Settings: 
 Each of the two individual output can be configured as follows:
@@ -61,7 +61,7 @@ Each of the two individual output can be configured as follows:
 | Parameter:            | Unit: | Explanation:                                                                                                                                                                                                                                                                      |
 |-----------------------|-------|----------------------------------|
 | Name of digital output| ---   | Name of digital output|
-| Digital output 		| ---	| (De-)Activation of digital output </br> 0:output is activated </br> 1:Output is deactivated|
+| Digital output 		| ---	| (De-)Activation of digital output </br> 0: Output is activated </br> 1: Output is deactivated|
 | Setpoint				| ---	| Setpoint that should be issued </br> 0: Output level set to "low" </br> 1: Output level set to "high"	   |
 
 Basic settings:

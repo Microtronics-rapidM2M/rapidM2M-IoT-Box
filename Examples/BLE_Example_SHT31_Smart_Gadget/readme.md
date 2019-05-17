@@ -1,4 +1,4 @@
-# Examples - BLE Smart Gadget
+# Example - BLE SHT31 Smart Gadget
 
 ![!BLE Image](https://support.microtronics.com/pictures/rapidM2M-IoT-Box_BLE_Example_SHT31_Smart_Gadget.jpg)
 
@@ -18,5 +18,5 @@ The script generates the following measurement values and issues them via the co
 
 | Measurement value:   | Unit: | Explanation:                                                                                                                                                                                                                                                                 |
 |----------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Humidity			   | %     | Humidity read out from the "Smart Humigadget"                                                                                                                                                                                                                          |
-| Temperature          | °C    | Temperature read out from the "Smart Humigadget"                                                                                                                                                                                        |
+| Humidity			   | %     | Humidity read out from the "Sensirion SHT31 Smart Gadget"                                                                                                                                                                                                                          |
+| Temperature          | °C    | Temperature read out from the "Sensirion SHT31 Smart Gadget"                                                                                                                                                                                        |

@@ -1,4 +1,4 @@
-# Examples - Wireless Thermometer
+# Example - Wireless Thermometer
 
 ![!Wireless Thermometer Image](https://blog.microtronics.com/wp-content/uploads/2017/06/tutorial-wireless-thermometer.jpg)
 

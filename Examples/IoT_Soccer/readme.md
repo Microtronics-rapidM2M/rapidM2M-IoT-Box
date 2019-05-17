@@ -1,4 +1,4 @@
-# Examples - IoT Soccer
+# Example - IoT Soccer
 ![!IoT Soccer Image](https://blog.microtronics.com/wp-content/uploads/2018/01/IMG_8629.jpg)
 The script gathers pulses of signal sensors via the two universal inputs. For correct detection, these must have a duration of at least 
 10ms. Every 250ms the counter readings of the two universal inputs are checked. If a universal input has detected at least one pulse the 
