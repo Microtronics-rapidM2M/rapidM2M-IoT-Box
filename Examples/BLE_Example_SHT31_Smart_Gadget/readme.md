@@ -1,6 +1,6 @@
 # Example - BLE SHT31 Smart Gadget
 
-![!BLE Image](https://support.microtronics.com/pictures/rapidM2M-IoT-Box_BLE_Example_SHT31_Smart_Gadget.jpg)
+![!Example - BLE SHT31 Smart Gadget](https://support.microtronics.com/pictures/rapidM2M-IoT-Box_BLE_Example_SHT31_Smart_Gadget.jpg)
 
 The script is designed to read the current temperature and humidity for a “Sensirion SHT31 Smart Gadget” 
 via Bluetooth Low Energy. The determined values are issued every 4sec. via the console so that they can 

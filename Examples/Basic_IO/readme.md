@@ -1,5 +1,7 @@
 # Example - Basic IO
 
+![!Example - Basic IO](https://support.microtronics.com/pictures/rapidM2M-IoT-Box_Basic_IO.jpg)
+
 The script monitors the six digital inputs at intervals of 250 ms, records the measurement data if one of the levels at the inputs 
 changes and transfers these to the [Cloud server](https://cloud.microtronics.com). In addition to the digital inputs, there are two digital outputs for which the 
 setpoints can be configured. Even modifying these setpoints will result in the measurement data being recorded and transferred. In 

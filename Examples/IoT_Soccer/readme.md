@@ -1,5 +1,8 @@
 # Example - IoT Soccer
-![!IoT Soccer Image](https://blog.microtronics.com/wp-content/uploads/2018/01/IMG_8629.jpg)
+
+![!Example - IoT Soccer](https://support.microtronics.com/pictures/rapidM2M-IoT-Box_IoT_Soccer)
+
+
 The script gathers pulses of signal sensors via the two universal inputs. For correct detection, these must have a duration of at least 
 10ms. Every 250ms the counter readings of the two universal inputs are checked. If a universal input has detected at least one pulse the 
 counter for the corresponding player is incremented by 1 and the monitoring of the universal inputs is stopped. I.e. the game is paused so
